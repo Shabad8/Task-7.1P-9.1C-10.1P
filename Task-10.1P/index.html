@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEV@Deakin Newsletter</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* --- Newsletter bar --- */
+    .newsletter-bar {
+      background-color: #f5f5f5;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .newsletter-bar input[type="email"] {
+      padding: 8px;
+      width: 240px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .newsletter-bar button {
+      background-color: #4bb74fff;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .newsletter-bar button:hover {
+      background-color: #43a844;
+    }
+
+    /* --- Footer --- */
+    footer {
+      background-color: #1c7a80;
+      color: white;
+      padding: 30px 50px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    footer h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    footer li {
+      margin-bottom: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    footer li:hover {
+      text-decoration: underline;
+    }
+
+    .socials img {
+      width: 25px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .bottom {
+      text-align: center;
+      background-color: #156a6f;
+      color: white;
+      font-size: 14px;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Newsletter subscription bar -->
+  <div class="newsletter-bar">
+    <form id="subscribeForm">
+      <label for="email"><strong>SIGN UP FOR OUR DAILY INSIDER</strong></label>
+      <input id="email" type="email" placeholder="Enter your email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <h3>Explore</h3>
+      <ul>
+        <li>Home</li>
+        <li>Questions</li>
+        <li>Articles</li>
+        <li>Tutorials</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Support</h3>
+      <ul>
+        <li>FAQs</li>
+        <li>Help</li>
+        <li>Contact Us</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Stay connected</h3>
+      <div class="socials">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+      </div>
+    </div>
+  </footer>
+
+  <div class="bottom">
+    <p>DEV@Deakin &nbsp;&nbsp; | &nbsp;&nbsp; Privacy Policy &nbsp; | &nbsp; Terms &nbsp; | &nbsp; Code of Conduct</p>
+  </div>
+
+  <script>
+    const form = document.getElementById('subscribeForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      try {
+        const res = await fetch('/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Email sent successfully!');
+          form.reset();
+        } else {
+          alert('Subscription failed. Please try again.');
+        }
+      } catch (err) {
+        alert('Network error. Please check your connection.');
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>
